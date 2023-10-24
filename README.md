@@ -6,8 +6,9 @@
 [![webpage](https://img.shields.io/badge/🌐-Website%20-blue.svg)](https://wordasimage.github.io/Word-As-Image-Page/) 
 [![Huggingface space](https://img.shields.io/badge/🤗-Demo%20-yellow.svg)](https://huggingface.co/spaces/SemanticTypography/Word-As-Image)
 [![Youtube](https://img.shields.io/badge/📽️-Video%20-orchid.svg)](https://www.youtube.com/watch?v=9D12a6RCQaw)
-It's a copy from https://github.com/Shiriluz/Word-As-Image.git
-It's for personal learning.
+
+>It's a copy from https://github.com/Shiriluz/Word-As-Image.git
+>It's for personal learning.
 <br>
 <div align="center">
     <img src="images/teaser.png" width="100%">
