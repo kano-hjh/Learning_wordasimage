@@ -118,13 +118,14 @@ class ConformalLoss:
         self.shape_groups = shape_groups
         self.faces = self.init_faces(device)
         self.faces_roll_a = [torch.roll(self.faces[i], 1, 1) for i in range(len(self.faces))]
-
+        self.device=device
         with torch.no_grad():
             self.angles = []
             self.reset()
 
 
     def get_angles(self, points: torch.Tensor) -> torch.Tensor:
+        points = points.to(self.device)
         angles_ = []
         for i in range(len(self.faces)):
             triangles = points[self.faces[i]]
@@ -145,7 +146,7 @@ class ConformalLoss:
                 return letter_inds[0], letter_inds[-1], len(letter_inds)
 
     def reset(self):
-        points = torch.cat([point.clone().detach() for point in self.parameters.point])
+        points = torch.cat([point.clone().detach().to(self.device) for point in self.parameters.point])
         self.angles = self.get_angles(points)
 
     def init_faces(self, device: torch.device) -> torch.tensor:
@@ -172,7 +173,5 @@ class ConformalLoss:
         for i in range(len(self.faces)):
             loss_angles += (nnf.mse_loss(angles[i], self.angles[i]))
         return loss_angles
-
-
 
 
