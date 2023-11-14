@@ -16,6 +16,8 @@ warnings.filterwarnings("ignore")
 
 def parse_args():
     parser = argparse.ArgumentParser()
+    #源代码
+    '''
     parser.add_argument("--config", type=str, default="code/config/base.yaml")
     parser.add_argument("--experiment", type=str, default="conformal_0.5_dist_pixel_100_kernel201")
     parser.add_argument("--seed", type=int, default=0)
@@ -29,9 +31,28 @@ def parse_args():
     parser.add_argument('--batch_size', type=int, default=1)
     parser.add_argument('--use_wandb', type=int, default=0)
     parser.add_argument('--wandb_user', type=str, default="none")
+    '''
+    #测试代码
+    
+    parser.add_argument("--config", type=str, default="code/config/base.yaml")
+    parser.add_argument("--experiment", type=str, default="conformal_0.5_dist_pixel_100_kernel201")
+    parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument('--log_dir', metavar='DIR', default="output")
+    parser.add_argument('--font', type=str, default="KaushanScript-Regular", help="font name")
+    parser.add_argument('--semantic_concept', type=str, default="BUNNY", help="the semantic concept to insert")
+    parser.add_argument('--word', type=str, default="BUNNY", help="the text to work on")
+    parser.add_argument('--prompt_suffix', type=str, default="minimal flat 2d vector. lineal color."
+                                                             " trending on artstation")
+    parser.add_argument('--optimized_letter', type=str, default="Y", help="the letter in the word to optimize")
+    parser.add_argument('--batch_size', type=int, default=1)
+    parser.add_argument('--use_wandb', type=int, default=0)
+    parser.add_argument('--wandb_user', type=str, default="none")
+    
 
     cfg = edict()
-    args = parser.parse_args()
+    #args = parser.parse_args()
+    args =parser.parse_known_args()[0]
+
     with open('TOKEN', 'r') as f:
         setattr(args, 'token', f.read().replace('\n', ''))
     cfg.config = args.config
@@ -39,7 +60,11 @@ def parse_args():
     cfg.seed = args.seed
     cfg.font = args.font
     cfg.semantic_concept = args.semantic_concept
-    cfg.word = cfg.semantic_concept if args.word == "none" else args.word
+    if args.word is not None:
+      cfg.word = args.word
+    else:
+      cfg.word = cfg.semantic_concept
+    #cfg.word = cfg.semantic_concept if args.word == "none" else args.word
     if " " in cfg.word:
       raise ValueError(f'no spaces are allowed')
     cfg.caption = f"a {args.semantic_concept}. {args.prompt_suffix}"
